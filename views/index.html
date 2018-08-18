@@ -1,1 +1,109 @@
-Hello world from index.html
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="random-password-generator.js"></script>
+
+
+
+    <script>
+        var pg = new PasswordGenerator();
+
+        function resetInputs(pg) {
+            document.getElementById("length_min").value = pg.minLength;
+            document.getElementById("length_max").value = pg.maxLength;
+            document.getElementById("excluded_char").value = pg.excludedCharacters;
+
+            document.getElementById("lower_case").checked = pg.mustHaveLowercase;
+            document.getElementById("upper_case").checked = pg.mustHaveUppercase;
+            document.getElementById("digit").checked = pg.mustHaveDigit;
+            document.getElementById("non_alpha_numeric").checked = pg.mustHaveNonAlphaNumeric;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            resetInputs(pg.constant);
+        }, false);
+
+
+        function getInputs() {
+            var inputs = {
+                minLength : document.getElementById("length_min").value,
+                maxLength : document.getElementById("length_max").value,
+                excludedCharacters : document.getElementById("excluded_char").value,
+                mustHaveLowercase : document.getElementById("lower_case").checked,
+                mustHaveUppercase : document.getElementById("upper_case").checked,
+                mustHaveDigit : document.getElementById("digit").checked,
+                mustHaveNonAlphaNumeric : document.getElementById("non_alpha_numeric").checked
+            }
+
+            return inputs;
+        }
+
+        function getPassword() {
+            document.getElementById("generated_password").innerHTML = pg.generate(getInputs());
+        }
+    </script>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-xs-offset-3 col-xs-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Random password generator</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <form>
+                                <div class="form-group">
+                                    <label for="length_min">Minimum length</label>
+                                    <input type="number" class="form-control" id="length_min" placeholder="Minimum length">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="length_max">Maximum length</label>
+                                    <input type="number" class="form-control" id="length_max" placeholder="Maximum length">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="excluded_char">Excluded characters</label>
+                                    <input type="text" class="form-control" id="excluded_char" placeholder="Excluded characters">
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="upper_case"> Must have upper case
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="true" id="lower_case"> Must have lower case
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="digit"> Must have digit
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="non_alpha_numeric"> Must have non alpha numeric
+                                    </label>
+                                </div>
+
+                                <button type="button" class="btn btn-default" onclick="getPassword()">Generate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-header">
+                <h1 class="text-center font-weight-bold" id="generated_password"></h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
