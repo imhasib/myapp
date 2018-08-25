@@ -1,130 +1,133 @@
-
 <html>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="bootstrap-slider.css">
 
-    <link rel="stylesheet" href="css/bootstrap-slider.css">
-    <script type="text/javascript" src="random-password-generator.js"></script>
-    <script type="text/javascript" src="bootstrap-slider.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+        <script type="text/javascript" src="bootstrap-slider.js"></script>
+        <script type="text/javascript" src="controller.js"></script>
+        <script type="text/javascript" src="random-password-generator.js"></script>
 
+    </head>
+    <body>
+        <div class="row padding-top" style="margin-top: 50px;">
+            <div class="col-xs-offset-2 col-xs-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Random password generator</div>
+                    <div class="panel-body">
 
-    <script>
-        var pg = new PasswordGenerator();
+                        <div role="alert" id="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span id="alert_message"></span>
+                        </div>
 
-        function resetInputs(pg) {
-            document.getElementById("length_min").value = pg.minLength;
-            document.getElementById("length_max").value = pg.maxLength;
-            document.getElementById("excluded_char").value = pg.excludedCharacters;
-
-            document.getElementById("lower_case").checked = pg.mustHaveLowercase;
-            document.getElementById("upper_case").checked = pg.mustHaveUppercase;
-            document.getElementById("digit").checked = pg.mustHaveDigit;
-            document.getElementById("non_alpha_numeric").checked = pg.mustHaveNonAlphaNumeric;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            resetInputs(pg.constant);
-        }, false);
-
-
-        function getInputs() {
-            var inputs = {
-                minLength : document.getElementById("length_min").value,
-                maxLength : document.getElementById("length_max").value,
-                excludedCharacters : document.getElementById("excluded_char").value,
-                mustHaveLowercase : document.getElementById("lower_case").checked,
-                mustHaveUppercase : document.getElementById("upper_case").checked,
-                mustHaveDigit : document.getElementById("digit").checked,
-                mustHaveNonAlphaNumeric : document.getElementById("non_alpha_numeric").checked
-            }
-
-            return inputs;
-        }
-
-        function getPassword() {
-            document.getElementById("generated_password").innerHTML = pg.generate(getInputs());
-        }
-
-        // Instantiate a slider
-        var mySlider = new Slider("#ex2", {
-            // initial options object
-        });
-
-        // Call a method on the slider
-        var value = mySlider.getValue();
-
-        // For non-getter methods, you can chain together commands
-        mySlider
-            .setValue(5)
-            .setValue(7);
-    </script>
-
-</head>
-<body>
-    <div class="row">
-        <div class="col-xs-offset-3 col-xs-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Random password generator</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-xs-offset-3 col-xs-6">
-                            <form>
-
-                                <div class="form-group">
-                                    Filter by price interval: <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/> <b>€ 1000</b>
+                        <div class="row">
+                            <div class="col-xs-offset-1 col-xs-10">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="upper_case"> Upper case
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" value="true" id="lower_case"> Lower case
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="numbers"> includeNumbers
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" id="symbols"> Special characters
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="length_min">Minimum length</label>
-                                    <input type="number" class="form-control" id="length_min" placeholder="Minimum length">
-                                </div>
+                        <div class="row">
+                            <div class="col-xs-offset-2 col-xs-8">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="length" class="col-sm-4 control-label">Length</label>
+                                        <div class="col-sm-8">
+                                            <b>1</b> <input id="length" type="text" class="form-control" value="" data-slider-min="1" data-slider-max="20" data-slider-step="1" data-slider-value="[4,8]"/> <b>20</b>
+                                        </div>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="length_max">Maximum length</label>
-                                    <input type="number" class="form-control" id="length_max" placeholder="Maximum length">
-                                </div>
+                                    <div class="form-group">
+                                        <label for="excluded_char" class="col-sm-4 control-label">Excluded characters</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="excluded_char" placeholder="Excluded characters">
+                                        </div>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="excluded_char">Excluded characters</label>
-                                    <input type="text" class="form-control" id="excluded_char" placeholder="Excluded characters">
-                                </div>
+                                    <div class="form-group">
+                                        <label for="quantity" class="col-sm-4 control-label">Quantity</label>
+                                        <div class="col-sm-8">
+                                            <input type="number" min="1" max="100000" class="form-control" id="quantity" placeholder="Excluded characters">
+                                        </div>
+                                    </div>
 
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="upper_case"> Must have upper case
-                                    </label>
-                                </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-10">
+                                            <!--<button type="button" class="btn btn-default">Generate</button>-->
+                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" onclick="getPassword()">
+                                                Generate Password
+                                            </button>
+                                        </div>
+                                    </div>
 
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="true" id="lower_case"> Must have lower case
-                                    </label>
-                                </div>
+                                    <div class="form-group" id="single_result">
+                                        <label for="quantity" class="col-sm-4 control-label">Password</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="generated_single_password">
+                                        </div>
+                                        <div class="col-sm-offset-1 col-sm-3">
+                                            <button type="button" class="btn btn-default" onclick="copyToClipBoard()">
+                                                Copy to clipboard
+                                            </button>
+                                        </div>
+                                    </div>
 
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="digit"> Must have digit
-                                    </label>
-                                </div>
-
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="non_alpha_numeric"> Must have non alpha numeric
-                                    </label>
-                                </div>
-
-                                <button type="button" class="btn btn-default" onclick="getPassword()">Generate</button>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="page-header">
-                <h1 class="text-center font-weight-bold" id="generated_password"></h1>
-            </div>
         </div>
-    </div>
-</body>
+
+
+
+
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Result</h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea class="form-control" rows="10" id="generated_password" style="resize: vertical;"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="download(JSON.stringify({passwords: results}), 'json.txt', 'text/plain');">Download as json</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    </body>
 </html>
