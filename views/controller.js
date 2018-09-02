@@ -1,15 +1,23 @@
 var pg = null;
 var lengthSlider = null;
+var quantitySlider = null;
 var results = null;
 
 $(function() {
     pg = new PasswordGenerator();
     lengthSlider = new Slider('#length', {});
-    resetInputs(pg.constant);
-    $('#single_result').hide();
-    $('#alert').hide();
-});
+    lengthSlider.on("slide", function(sliderValue) {
+        document.getElementById("lengthSliderVal").textContent = sliderValue[0] + " to " + sliderValue[1];
+    });
+    quantitySlider = new Slider("#quantitySlider");
+    quantitySlider.on("slide", function(sliderValue) {
+        document.getElementById("quantitySliderVal").textContent = sliderValue;
+    });
 
+    resetInputs(pg.constant);
+    $('#alert').hide();
+    $('#progressbar').hide();
+});
 
 function resetInputs(pg) {
     lengthSlider.setValue([pg.minLength, pg.maxLength]);
@@ -21,9 +29,9 @@ function resetInputs(pg) {
     $("#quantity").val(pg.quantity);
 }
 
-
 function getInputs() {
     var lengths = lengthSlider.getValue();
+    var quantity = quantitySlider.getValue();
     var inputs = {
         minLength : lengths[0],
         maxLength : lengths[1],
@@ -32,33 +40,42 @@ function getInputs() {
         includeUppercase : $("#upper_case").prop( "checked" ),
         includeNumbers : $("#numbers").prop( "checked" ),
         includeSymbols : $("#symbols").prop( "checked" ),
-        quantity : $("#quantity").val()
+        quantity : quantity
     }
 
     return inputs;
 }
 
 function getPassword() {
-    var inputs = getInputs();
-    if(!validateInputs(inputs)) {
-        return;
-    }
+    $('#progressbar').show();
 
-    var output = pg.generate(inputs);
-    if(output.status == 'ok') {
-        results = output.results;
-    }
-    var resultsHtml = ""
-    if(results.length > 1) {
-        for(var i=0 ; i<results.length; i++) {
-            resultsHtml += '\n' + results[i] + '';
-        }
-        $("#generated_password").html(resultsHtml);
-        $('#myModal').modal('show');
-        $('#single_result').hide();
-    } else {
-        $("#generated_single_password").val(results[0]);
-        $('#single_result').show();
+    var inputs = getInputs();
+    if(validateInputs(inputs)) {
+        var processData = new Promise(function loadData(resolve, reject) {
+            var output = pg.generate(inputs);
+            if(output.status == 'ok') {
+                results = output.results;
+            }
+
+            var resultsHtml = "";
+            for(var i=0 ; i < results.length; i++) {
+                resultsHtml += results[i] + '\n';
+            }
+
+            resolve({results: results, resultAsText: resultsHtml});
+        });
+
+        processData.then(function (data) {
+            $("#generated_password").html(data.resultAsText);
+            $('#progressbar').hide();
+            if(data.results.length <= 1) {
+                $("#download-button").hide();
+            } else {
+                $("#download-button").show();
+            }
+
+            $('#myModal').modal('show');
+        });
     }
 }
 
@@ -91,7 +108,7 @@ function download(content, fileName, contentType) {
 
 function copyToClipBoard() {
     /* Get the text field */
-    var copyText = $("#generated_single_password");
+    var copyText = $("#generated_password");
 
     /* Select the text field */
     copyText.select();
@@ -102,7 +119,6 @@ function copyToClipBoard() {
     /* Alert the copied text */
     showMessage('success', 'Password is copied to clipboard')
 }
-
 
 function showMessage(type, message) {
     $("#alert").removeClass();
