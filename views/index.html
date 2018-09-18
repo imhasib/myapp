@@ -4,6 +4,7 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="bootstrap-slider.css">
+        <link rel="stylesheet" href="main.css">
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -11,84 +12,13 @@
         <script type="text/javascript" src="bootstrap-slider.js"></script>
         <script type="text/javascript" src="controller.min.js"></script>
         <script type="text/javascript" src="random-password-generator.min.js"></script>
-
-        <style>
-            .slider.slider-horizontal {
-                width: 100%;
-                height: 20px;
-            }
-
-            /*.footer {*/
-                /*position: absolute;*/
-                /*right: 0;*/
-                /*bottom: 0;*/
-                /*left: 0;*/
-                /*padding: 1rem;*/
-                /*background-color: #efefef;*/
-                /*text-align: center;*/
-            /*}*/
-
-
-
-            * {
-                margin: 0px;
-                padding: 0px;
-                box-sizing: border-box;
-            }
-
-            body, html {
-                height: 100%;
-                font-family: OpenSans-Regular, sans-serif;
-            }
-
-
-            .limiter {
-                width: 100%;
-                margin: 0 auto;
-            }
-
-            .container-login100 {
-                width: 100%;
-                min-height: 100vh;
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -moz-box;
-                display: -ms-flexbox;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-items: center;
-                padding: 15px;
-                background: #e9faff;
-            }
-
-            .wrap-login100 {
-                width: 70%;
-                /*background: #fff;*/
-                border-radius: 10px;
-                overflow: hidden;
-
-                box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-                -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-                -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-                -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-                -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            }
-
-            /*.p-t-65 {padding-right: 65px;}*/
-            /*.p-r-55 {padding-right: 55px;}*/
-            /*.p-b-50 {padding-right: 50px;}*/
-            /*.p-l-55 {padding-left: 55px;}*/
-        </style>
     </head>
 
     <body>
-
-    <div class="limiter">
-        <div class="container-login100">
-            <!--<div class="">-->
+        <div class="limiter">
+            <div class="container-login100">
                 <div class="wrap-login100 panel panel-primary">
-                    <div class="panel-heading">Password Generator</div>
+                    <div class="panel-heading"><span class="glyphicon glyphicon-lock"></span> Password Generator</div>
                     <div class="panel-body">
 
                         <!--TODO Not working expected way.-->
@@ -110,22 +40,22 @@
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <label class="checkbox-inline">
-                                                    <input type="checkbox" id="upper_case"> Upper case
+                                                    <input type="checkbox" id="upper_case"> Uppercase
                                                 </label>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="checkbox-inline">
-                                                    <input type="checkbox" value="true" id="lower_case"> Lower case
+                                                    <input type="checkbox" value="true" id="lower_case"> Lowercase
                                                 </label>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="checkbox-inline">
-                                                    <input type="checkbox" id="numbers"> includeNumbers
+                                                    <input type="checkbox" id="numbers">Numbers
                                                 </label>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="checkbox-inline">
-                                                    <input type="checkbox" id="symbols"> Special characters
+                                                    <input type="checkbox" id="symbols"> Symbols
                                                 </label>
                                             </div>
                                         </div>
@@ -187,9 +117,8 @@
                         </div>
                     </div>
                 </div>
-            <!--</div>-->
+            </div>
         </div>
-    </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
             <div class="modal-dialog" role="document">
@@ -211,14 +140,10 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <!--<footer class="footer">-->
-            <!--<div class="row">-->
-                <!--<div class="col-sm-offset-2 col-sm-8">-->
-                    <!--<div class="pull-left">© 2018 All rights reserved by HSB Password Generator.</div>-->
-                    <!--<div class="pull-right">Email: email2hasib@yahoo.com</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</footer>-->
+        <footer class="footer">
+            <div class="pull-left">© 2018 All rights reserved by HSB Password Generator.</div>
+            <div class="pull-right">Email: email2hasib@yahoo.com</div>
+        </footer>
 
     </body>
 </html>
